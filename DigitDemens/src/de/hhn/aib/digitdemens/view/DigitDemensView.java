@@ -1,5 +1,6 @@
 package de.hhn.aib.digitdemens.view;
 
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
@@ -24,6 +25,7 @@ public class DigitDemensView extends JFrame{
 	private JTextField username;
 	private JPasswordField password;
 	private JButton okButton;
+	private GridBagConstraints gbc;
 	
 
 	public DigitDemensView() {
@@ -32,6 +34,7 @@ public class DigitDemensView extends JFrame{
 		this.setSize(1200,800);
 		panel = (JPanel) getContentPane();
 		panel.setLayout(new GridBagLayout());
+		gbc = new GridBagConstraints();
 		initUI();
 	}
 
@@ -45,15 +48,31 @@ public class DigitDemensView extends JFrame{
 		//initialize
 		userLabel = new JLabel("Username:");
 		passLabel = new JLabel("Password:");
-		username = new JTextField();
-		password = new JPasswordField();
+		username = new JTextField(16);
+		password = new JPasswordField(16);
 		okButton = new JButton("OK");
 		
 		//set up
 		userLabel.setLabelFor(username);
 		passLabel.setLabelFor(password);
 		
-		
+		//design
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		panel.add(userLabel,gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		panel.add(passLabel, gbc);
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		panel.add(username, gbc);
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		panel.add(password, gbc);
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		panel.add(okButton, gbc);
+		//this.pack();
 		
 	}
 
