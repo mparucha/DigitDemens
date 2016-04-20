@@ -3,6 +3,9 @@ package de.hhn.aib.digitdemens.view;
 import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -52,12 +55,11 @@ public class DigitDemensView extends JFrame{
 		cardPanel = (JPanel) getContentPane();
 		cardPanel.setLayout(cardLayout);
 		gbc = new GridBagConstraints();
-		
-		initMain();
-		initRegistry();
+		initView();
+		setMain();
 		cardPanel.add(main, "Main");
 		cardPanel.add(registry, "Register");
-		cardLayout.show(cardPanel, "Register");
+		cardLayout.show(cardPanel, "Main");
 	}
 
 	public static void main(String[] args) {
@@ -65,31 +67,8 @@ public class DigitDemensView extends JFrame{
 
 	}
 	
-	public void initMain()
+	public void setMain()
 	{
-		main = new JPanel();
-		main.setLayout(new GridBagLayout());
-		//initialize
-		userLabel = new JLabel("Username:");
-		passLabel = new JLabel("Password:");
-		username = new JTextField(16);
-		password = new JPasswordField(16);
-		okButton = new JButton("OK");
-		menuBar = new JMenuBar();
-		options = new JMenu("Options");
-		directory = new JMenuItem("Change Directory");
-		registerButton = new JButton("register");
-		
-		//set up
-		userLabel.setLabelFor(username);
-		passLabel.setLabelFor(password);
-		
-		//Menu
-		menuBar.add(options);
-		options.add(directory);
-		this.setJMenuBar(menuBar);
-		
-		//design
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		main.add(userLabel,gbc);
@@ -108,21 +87,13 @@ public class DigitDemensView extends JFrame{
 		gbc.gridx = 1;
 		gbc.gridy = 3;
 		main.add(registerButton, gbc);
+		
 		//this.pack();
 		
 	}
 	
-	public void initRegistry()
+	public void setRegistry()
 	{
-		registry = new JPanel();
-		registry.setLayout(new GridBagLayout());
-		
-		passwordSec = new JPasswordField(16);
-		passSecLabel = new JLabel("Password again:");
-		backButton = new JButton("Back");
-		
-		passSecLabel.setLabelFor(passwordSec);
-		
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		registry.add(userLabel,gbc);
@@ -148,5 +119,58 @@ public class DigitDemensView extends JFrame{
 		gbc.gridy = 4;
 		registry.add(backButton, gbc);
 	}
-
+	
+	public void initView()
+	{
+		main = new JPanel();
+		main.setLayout(new GridBagLayout());
+		registry = new JPanel();
+		registry.setLayout(new GridBagLayout());
+		
+		userLabel = new JLabel("Username:");
+		passLabel = new JLabel("Password:");
+		username = new JTextField(16);
+		password = new JPasswordField(16);
+		okButton = new JButton("OK");
+		menuBar = new JMenuBar();
+		options = new JMenu("Options");
+		directory = new JMenuItem("Change Directory");
+		registerButton = new JButton("Register");
+		passwordSec = new JPasswordField(16);
+		passSecLabel = new JLabel("Password again:");
+		backButton = new JButton("Back");
+		//set up
+		userLabel.setLabelFor(username);
+		passLabel.setLabelFor(password);
+		passSecLabel.setLabelFor(passwordSec);
+		
+		//Menu
+		menuBar.add(options);
+		options.add(directory);
+		this.setJMenuBar(menuBar);
+		
+		//listener
+				okButton.addActionListener(new ActionListener() {
+		            // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
+		            public void actionPerformed(ActionEvent e) {
+		            	dispose();
+		                
+		            }
+		        });
+				registerButton.addActionListener(new ActionListener() {
+		            // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
+		            public void actionPerformed(ActionEvent e) {
+		            	setRegistry();
+		                cardLayout.show(cardPanel, "Register");
+		            }
+		        });
+				
+				backButton.addActionListener(new ActionListener() {
+		            // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
+		            public void actionPerformed(ActionEvent e) {
+		            	setMain();
+		                cardLayout.show(cardPanel, "Main");
+		            }
+		        });
+	}
 }
