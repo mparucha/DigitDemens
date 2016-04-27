@@ -1,21 +1,12 @@
 package de.hhn.aib.digitdemens.view;
 
-import de.hhn.aib.digitdemens.utility.*;
 import java.awt.CardLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 
@@ -52,7 +43,6 @@ public class DigitDemensView extends JFrame{
 
 	public void initView()
 	{
-		
 		loginView = new LoginView();
 		registerView = new RegisterView();
 		cardPanel = (JPanel) getContentPane();
