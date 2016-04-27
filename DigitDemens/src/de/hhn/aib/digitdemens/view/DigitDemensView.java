@@ -1,11 +1,11 @@
 package de.hhn.aib.digitdemens.view;
 
+import de.hhn.aib.digitdemens.utility.*;
 import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -69,54 +69,38 @@ public class DigitDemensView extends JFrame{
 	
 	public void setMain()
 	{
-		gbc.gridx = 0;
-		gbc.gridy = 1;
+		Utility.makeGBC(gbc, 0, 1, -1, -1, -1, -1, -1, -1, -1, -1);
 		main.add(userLabel,gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 2;
+		Utility.makeGBC(gbc, 0, 2, -1, -1, -1, -1, -1, -1, -1, -1);
 		main.add(passLabel, gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 1;
+		Utility.makeGBC(gbc, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1);
 		main.add(username, gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 2;
+		Utility.makeGBC(gbc, 1, 2, -1, -1, -1, -1, -1, -1, -1, -1);
 		main.add(password, gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 3;
+		Utility.makeGBC(gbc, 0, 3, -1, -1, -1, -1, -1, -1, -1, -1);
 		main.add(okButton, gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 3;
+		Utility.makeGBC(gbc, 1, 3, -1, -1, -1, -1, -1, -1, -1, -1);
 		main.add(registerButton, gbc);
-		
-		//this.pack();
 		
 	}
 	
 	public void setRegistry()
 	{
-		gbc.gridx = 0;
-		gbc.gridy = 1;
+		Utility.makeGBC(gbc, 0, 1, -1, -1, -1, -1, -1, -1, -1, -1);
 		registry.add(userLabel,gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 2;
+		Utility.makeGBC(gbc, 0, 2, -1, -1, -1, -1, -1, -1, -1, -1);
 		registry.add(passLabel, gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 3;
+		Utility.makeGBC(gbc, 0, 3, -1, -1, -1, -1, -1, -1, -1, -1);
 		registry.add(passSecLabel, gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 1;
+		Utility.makeGBC(gbc, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1);
 		registry.add(username, gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 2;
+		Utility.makeGBC(gbc, 1, 2, -1, -1, -1, -1, -1, -1, -1, -1);
 		registry.add(password, gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 3;
+		Utility.makeGBC(gbc, 1, 3, -1, -1, -1, -1, -1, -1, -1, -1);
 		registry.add(passwordSec, gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 4;
+		Utility.makeGBC(gbc, 0, 4, -1, -1, -1, -1, -1, -1, -1, -1);
 		registry.add(okButton, gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 4;
+		Utility.makeGBC(gbc, 1, 4, -1, -1, -1, -1, -1, -1, -1, -1);
 		registry.add(backButton, gbc);
 	}
 	
@@ -153,8 +137,7 @@ public class DigitDemensView extends JFrame{
 				okButton.addActionListener(new ActionListener() {
 		            // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
 		            public void actionPerformed(ActionEvent e) {
-		            	dispose();
-		                
+		            	dispose();  
 		            }
 		        });
 				registerButton.addActionListener(new ActionListener() {
