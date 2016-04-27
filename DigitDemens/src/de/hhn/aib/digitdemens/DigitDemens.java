@@ -14,4 +14,9 @@ public class DigitDemens {
 
 	}
 
+	public static DigitDemensView getdDView() {
+		return dDView;
+	}
+
+
 }
