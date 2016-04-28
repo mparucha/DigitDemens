@@ -1,7 +1,6 @@
 package de.hhn.aib.digitdemens.utility;
 
 import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
 public class Utility {
 	

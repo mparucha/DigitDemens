@@ -12,6 +12,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import de.hhn.aib.digitdemens.DigitDemens;
+import de.hhn.aib.digitdemens.controller.Registration;
 import de.hhn.aib.digitdemens.utility.Utility;
 
 
@@ -103,6 +104,11 @@ public class RegisterView extends JPanel {
 		registerButton.addActionListener(new ActionListener() {
             // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
             public void actionPerformed(ActionEvent e) {
+            	if(Registration.register(username.getText(),preName.getText(),name.getText(),password.getPassword()))
+            	{
+            		System.out.println("registration done");
+            	}
+            	else System.out.println("registration failed");
             	
             }
         });
