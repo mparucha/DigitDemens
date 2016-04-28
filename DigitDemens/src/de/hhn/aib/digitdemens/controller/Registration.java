@@ -47,9 +47,9 @@ public class Registration {
 		return true;
 	}
 	
-	public void checkInput(String username, String preName, String name, char[] password)
+	public boolean checkInput(String username, String preName, String name, char[] password)
 	{
-		
+		return true;
 	}
 	
 
