@@ -16,17 +16,7 @@ public class Registration {
 	{
 		try
 		{
-		File dDPath = new File("C:\\Users\\Marek Parucha\\DigitalDemens\\");
 		File userPath = new File(workingDir+preName+name);
-		if(dDPath.exists())
-		{
-			System.out.println("path already exists");
-		}
-		else
-		{
-			dDPath.mkdir();
-			System.out.println("path created");
-		}
 		
 		if(userPath.exists())
 		{
