@@ -1,5 +1,11 @@
 package de.hhn.aib.digitdemens;
 
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.KeyGenerator;
+
+import de.hhn.aib.digitdemens.utility.Crypt;
 import de.hhn.aib.digitdemens.view.DigitDemensView;
 
 public class DigitDemens {
