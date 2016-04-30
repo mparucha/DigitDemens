@@ -60,7 +60,7 @@ public class RegisterView extends JPanel {
 		preName = new JTextField(16);
 		name = new JTextField(16);
 		password = new JPasswordField(16);
-		registerButton = new JButton("Login");
+		registerButton = new JButton("Register");
 		passwordSec = new JPasswordField(16);
 		passSecLabel = new JLabel("Password again: ");
 		backButton = new JButton("Back");
@@ -104,7 +104,7 @@ public class RegisterView extends JPanel {
 		registerButton.addActionListener(new ActionListener() {
             // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
             public void actionPerformed(ActionEvent e) {
-            	if(Registration.register(username.getText(),preName.getText(),name.getText(),password.getPassword()))
+            	if(Registration.register(username.getText(),preName.getText()+name.getText(),password.getPassword(), new String[0]))
             	{
             		System.out.println("registration done");
             	}
