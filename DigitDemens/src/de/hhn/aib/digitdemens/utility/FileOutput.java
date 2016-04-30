@@ -122,9 +122,16 @@ public class FileOutput {
 	public byte[] makeEncryptedSystemFile(String pass) throws Exception
 	{
 		Crypt crypt = new Crypt(KeyGen.generatedKey(pass),"AES");
-		String systemFile = "";
-
-		systemFile+="FullName:"+fullName+";"+"Username:"+username+";"+System.getProperty("line.separator");
+		String systemFile = "FullName:"+fullName+";"+"Username:"+username+";"+System.getProperty("line.separator");
+		byte[] systemFileBytes = crypt.encrypt(systemFile);
+		return systemFileBytes;
+	}
+	
+	public byte[] editEncryptedSystemFile(String pass, String data) throws Exception
+	{
+		Crypt crypt = new Crypt(KeyGen.generatedKey(pass),"AES");
+		String systemFile = "FullName:"+fullName+";"+"Username:"+username+";"+System.getProperty("line.separator");
+		systemFile+=data;
 		byte[] systemFileBytes = crypt.encrypt(systemFile);
 		return systemFileBytes;
 	}

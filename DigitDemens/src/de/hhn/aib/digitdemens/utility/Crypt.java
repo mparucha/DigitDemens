@@ -2,6 +2,8 @@ package de.hhn.aib.digitdemens.utility;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
  
 import javax.crypto.Cipher;
@@ -9,7 +11,6 @@ import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
  
 import java.util.Base64;
-
  
 /**
  * @author Alexander Gr
@@ -80,7 +81,7 @@ public class Crypt {
       byte[] encrypted = cipher.doFinal(text.getBytes());
  
       // bytes zu Base64-String konvertieren
-      String secret = Base64.getEncoder().encodeToString(encrypted);
+      String secret = Base64.getMimeEncoder().encodeToString(encrypted);
        
       return secret;
    }
@@ -95,7 +96,7 @@ public class Crypt {
 	      byte[] encrypted = cipher.doFinal(text.getBytes());
 	 
 	      // bytes zu Base64-String konvertieren
-	      return Base64.getEncoder().encode(encrypted);
+	      return Base64.getMimeEncoder().encode(encrypted);
 	   }
  
    /** Entschluesselt einen BASE64 kodierten Text
@@ -108,7 +109,7 @@ public class Crypt {
       valid();
        
       // BASE64 String zu Byte-Array
-      byte[] crypted = Base64.getDecoder().decode(geheim);      
+      byte[] crypted =  Base64.getMimeDecoder().decode(geheim);      
         
       // entschluesseln
       Cipher cipher = Cipher.getInstance(verfahren);
@@ -116,6 +117,21 @@ public class Crypt {
       byte[] cipherData = cipher.doFinal(crypted);
       return new String(cipherData);
    }
+   
+   public String decryptByteBuffer(ByteBuffer byteBuffer) throws Exception {
+	      // integritaet pruefen
+	      valid();
+	       
+	      // BASE64 String zu Byte-Array
+	      ByteBuffer crypted =  Base64.getMimeDecoder().decode(byteBuffer);
+	      byte[] cryptedByte = crypted.array();
+	        
+	      // entschluesseln
+	      Cipher cipher = Cipher.getInstance(verfahren);
+	      cipher.init(Cipher.DECRYPT_MODE, key);
+	      byte[] cipherData = cipher.doFinal(cryptedByte);
+	      return new String(cipherData);
+	   }
     
    //++++++++++++++++++++++++++++++
    // Validierung

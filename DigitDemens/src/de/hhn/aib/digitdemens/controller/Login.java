@@ -1,13 +1,9 @@
 package de.hhn.aib.digitdemens.controller;
 
 import java.io.File;
-import java.io.IOException;
-
 import javax.crypto.BadPaddingException;
 
-import de.hhn.aib.digitdemens.utility.Crypt;
-import de.hhn.aib.digitdemens.utility.FileInput;
-import de.hhn.aib.digitdemens.utility.KeyGen;
+import de.hhn.aib.digitdemens.utility.Utility;
 
 public class Login {
 
@@ -17,13 +13,13 @@ public class Login {
 	{
 		File systemPath = new File(workingDir);
 		File userPath = checkSystemLog(username);
-		String fullName = userPath.getAbsolutePath().substring(0, workingDir.length());
+		String fullName = userPath.getAbsolutePath().substring(0, workingDir.length()-1);
 		System.out.println(userPath.getAbsolutePath());
-		if(userPath.equals(workingDir+null)) return false;
+		if(userPath.equals(systemPath)) return false;
 		if(!checkLoginData(username, password, userPath, fullName)) return false;
 		return true;
 	}
-	
+	//TODO
 	public static boolean checkInput(String login, char[] password)
 	{
 		return true;
@@ -32,10 +28,7 @@ public class Login {
 	public static File checkSystemLog(String username) throws Exception
 	{
 		File systemPath = new File(workingDir+"systemFile.dd");
-		FileInput fi = new FileInput(systemPath);
-		String systemDataEncrypted = fi.readFromFileToString();
-		Crypt decrypt = new Crypt(KeyGen.generatedKey(workingDir),"AES");
-		String systemDataDecrypted=  decrypt.decrypt(systemDataEncrypted);
+		String systemDataDecrypted=  Utility.decryptFile(systemPath, String.valueOf(workingDir));
 		System.out.println(systemDataDecrypted);
 		return new File(workingDir+findUserpath(username,systemDataDecrypted));
 	}
@@ -55,19 +48,17 @@ public class Login {
 			
 		}
 		System.out.println("User couldnt be found");
-		return null;
+		return "";
 	}
 	
 	public static boolean checkLoginData(String username, char[] password, File userPath, String fullName) throws Exception
 	{
 		File logPath = new File(userPath.getAbsolutePath()+"\\logFile.dd");
-		FileInput fi = new FileInput(logPath);
-		String text = fi.readFromFileToString();
-		Crypt decrypt = new Crypt(KeyGen.generatedKey(String.valueOf(password)),"AES");
 		String systemDataDecrypted = "no text";
+		String[] userInfos;
 		try
 		{
-			systemDataDecrypted =  decrypt.decrypt(text);
+			systemDataDecrypted =  Utility.decryptFile(logPath, String.valueOf(password));
 		}
 		catch (BadPaddingException e)
 		{
@@ -75,6 +66,12 @@ public class Login {
 			return false;
 		}
 		System.out.println(systemDataDecrypted);
+		userInfos = systemDataDecrypted.split(";"+System.getProperty("line.separator"));
+		
+		if(!userInfos[0].substring(0, 9).equals(fullName)) return false;
+		if(!userInfos[1].substring(0, 9).equals(username)) return false;
+		if(!userInfos[2].substring(0, 9).equals(String.valueOf(password))) return false;
+		
 		return true;
 	}
 }

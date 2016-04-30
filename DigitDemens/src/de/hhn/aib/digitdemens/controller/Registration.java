@@ -4,16 +4,13 @@ import java.io.File;
 import java.io.IOException;
 
 import de.hhn.aib.digitdemens.utility.FileOutput;
+import de.hhn.aib.digitdemens.utility.Utility;
 
 public class Registration {
 	
 	
 	public static String workingDir = "C:\\Users\\Marek Parucha\\DigitalDemens\\";
 	
-	public static void main(String[] args)
-	{
-		System.out.println(workingDir);
-	}
 	
 	public static boolean register(String username, String fullName, char[] password, String[] info)
 	{
@@ -45,7 +42,7 @@ public class Registration {
 		return true;
 	}
 	
-	
+	//TODO
 	public static boolean checkInput(String username, String fullName, char[] password)
 	{
 		return true;
@@ -63,15 +60,27 @@ public class Registration {
 		}	
 		return false;
 	}
-	//TODO
+	
 	public static boolean writeSystemFile(String username, String fullName) throws IOException, Exception
 	{
-		
+		File systemPath = new File(workingDir + "systemFile.dd");
 		FileOutput fo = new FileOutput(fullName, username);
-		if(fo.writeSystemFile(fo.makeEncryptedSystemFile(workingDir)))
+		if(!systemPath.exists())
 		{
-			return true;
-		}	
+			if(fo.writeSystemFile(fo.makeEncryptedSystemFile(workingDir)))
+			{
+				return true;
+			}	
+		}
+		else
+		{
+			String text =  Utility.decryptFile(systemPath, workingDir);
+			systemPath.delete();
+			if(fo.writeSystemFile(fo.editEncryptedSystemFile(workingDir, text)))
+			{
+				return true;
+			}	
+		}
 		return false;
 	}
 	

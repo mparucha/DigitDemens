@@ -23,7 +23,7 @@ public class FileInput {
 		    builder.append((char)ch);
 		}
 		fis.close();
-		return builder.toString();
+		return builder.toString().trim();
 		
 	}
 }

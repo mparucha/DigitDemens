@@ -1,6 +1,7 @@
 package de.hhn.aib.digitdemens.utility;
 
 import java.awt.GridBagConstraints;
+import java.io.File;
 
 public class Utility {
 	
@@ -30,6 +31,14 @@ public class Utility {
 		if(anchor != -1)gbc.anchor = anchor;
 		if(weightx != -1)gbc.weightx = weightx;
 		if(weighty != -1)gbc.weighty = weighty;
+	}
+	
+	public static String decryptFile(File path, String pass) throws Exception
+	{
+		FileInput fi = new FileInput(path);
+		Crypt decrypt = new Crypt(KeyGen.generatedKey(pass),"AES");
+		String text = fi.readFromFileToString();
+		return decrypt.decrypt(text);
 	}
 
 }
