@@ -49,7 +49,7 @@ public class DigitDemensView extends JFrame{
 		cardPanel.setLayout(cardLayout);
 		cardPanel.add(loginView, "Login");
 		cardPanel.add(registerView, "Register");
-		cardLayout.show(cardPanel, "Register");
+		cardLayout.show(cardPanel, "Login");
 		
 		menuBar = new JMenuBar();
 		options = new JMenu("Options");

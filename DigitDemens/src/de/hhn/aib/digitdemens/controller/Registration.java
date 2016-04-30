@@ -29,7 +29,7 @@ public class Registration {
 			}
 			else
 			{
-				if(createUser(userPath, username, fullName, password, info))
+				if(createUser(userPath, username, fullName, password, info)&&writeSystemFile(username,fullName))
 				{
 					System.out.println("user created");
 				}
@@ -58,6 +58,17 @@ public class Registration {
 		FileOutput fo = new FileOutput(fullName, username, pass);
 		path.mkdir();
 		if(fo.writeLogFile(fo.makeEncryptedLogFile(info)))
+		{
+			return true;
+		}	
+		return false;
+	}
+	//TODO
+	public static boolean writeSystemFile(String username, String fullName) throws IOException, Exception
+	{
+		
+		FileOutput fo = new FileOutput(fullName, username);
+		if(fo.writeSystemFile(fo.makeEncryptedSystemFile(workingDir)))
 		{
 			return true;
 		}	

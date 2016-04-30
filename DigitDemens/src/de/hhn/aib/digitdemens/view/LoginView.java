@@ -12,6 +12,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import de.hhn.aib.digitdemens.DigitDemens;
+import de.hhn.aib.digitdemens.controller.Login;
 import de.hhn.aib.digitdemens.utility.Utility;
 
 public class LoginView extends JPanel {
@@ -72,7 +73,12 @@ public class LoginView extends JPanel {
 		loginButton.addActionListener(new ActionListener() {
             // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
             public void actionPerformed(ActionEvent e) {
-  
+            	try {
+					Login.login(username.getText(), password.getPassword());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
 		registerButton.addActionListener(new ActionListener() {
