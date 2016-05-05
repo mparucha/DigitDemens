@@ -8,7 +8,7 @@ import de.hhn.aib.digitdemens.utility.Utility;
 
 public class Registration {
 	
-	
+	//TODO
 	public static String workingDir = "C:\\Users\\Marek Parucha\\DigitalDemens\\";
 	
 	
@@ -53,7 +53,7 @@ public class Registration {
 	{
 		String pass = String.valueOf(password);
 		FileOutput fo = new FileOutput(fullName, username, pass);
-		path.mkdir();
+		path.mkdirs();
 		if(fo.writeLogFile(fo.makeEncryptedLogFile(info)))
 		{
 			return true;

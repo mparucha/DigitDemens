@@ -6,7 +6,7 @@ import javax.crypto.BadPaddingException;
 import de.hhn.aib.digitdemens.utility.Utility;
 
 public class Login {
-
+	//TODO
 	public static String workingDir = "C:\\Users\\Marek Parucha\\DigitalDemens\\";
 	
 	public static boolean login(String username, char[] password) throws Exception
@@ -24,7 +24,7 @@ public class Login {
 	{
 		return true;
 	}
-	
+	//TODO
 	public static File checkSystemLog(String username) throws Exception
 	{
 		File systemPath = new File(workingDir+"systemFile.dd");

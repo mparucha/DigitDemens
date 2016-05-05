@@ -27,6 +27,7 @@ public class DigitDemensView extends JFrame{
 	//other
 	private LoginView loginView;
 	private RegisterView registerView;
+	private MainView mainView;
 
 	public DigitDemensView() {
 		super("DigitDemens - Main");
@@ -45,11 +46,13 @@ public class DigitDemensView extends JFrame{
 	{
 		loginView = new LoginView();
 		registerView = new RegisterView();
+		mainView = new MainView();
 		cardPanel = (JPanel) getContentPane();
 		cardPanel.setLayout(cardLayout);
 		cardPanel.add(loginView, "Login");
 		cardPanel.add(registerView, "Register");
-		cardLayout.show(cardPanel, "Login");
+		cardPanel.add(mainView, "Main");
+		cardLayout.show(cardPanel, "Main");
 		
 		menuBar = new JMenuBar();
 		options = new JMenu("Options");
