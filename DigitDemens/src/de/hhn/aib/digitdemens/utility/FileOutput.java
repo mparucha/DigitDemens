@@ -109,7 +109,7 @@ public class FileOutput {
 			logFile+="FullName:"+fullName+";"+System.getProperty("line.separator");
 			logFile+="Username:"+username+";"+System.getProperty("line.separator");
 			logFile+="Password:"+password+";"+System.getProperty("line.separator");
-			logFile+="Info:";
+			logFile+="Groups:";
 			
 			for(int i = 0; i<data.length; i++)
 			{

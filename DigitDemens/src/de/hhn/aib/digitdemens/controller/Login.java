@@ -8,16 +8,20 @@ import de.hhn.aib.digitdemens.utility.Utility;
 public class Login {
 	//TODO
 	public static String workingDir = "C:\\Users\\Marek Parucha\\DigitalDemens\\";
+	private static Main main;
+	private static boolean loggedIn = false;
 	
 	public static boolean login(String username, char[] password) throws Exception
 	{
 		File systemPath = new File(workingDir);
 		File userPath = checkSystemLog(username);
-		String fullName = userPath.getAbsolutePath().substring(0, workingDir.length()-1);
+		String fullName = userPath.getAbsolutePath().substring(workingDir.length());
 		System.out.println(userPath.getAbsolutePath());
-		if(userPath.equals(systemPath)) return false;
-		if(!checkLoginData(username, password, userPath, fullName)) return false;
-		return true;
+		if(userPath.equals(systemPath)) return loggedIn;
+		if(!checkLoginData(username, password, userPath, fullName)) return loggedIn;
+		loggedIn = true;
+		setMain(fullName, password, username);
+		return loggedIn;
 	}
 	//TODO
 	public static boolean checkInput(String login, char[] password)
@@ -32,8 +36,8 @@ public class Login {
 		System.out.println(systemDataDecrypted);
 		return new File(workingDir+findUserpath(username,systemDataDecrypted));
 	}
-	
-	public static String findUserpath(String username, String text )
+	//TODO if user does not exist failure
+	public static String findUserpath(String username, String text)
 	{
 		String[] userInfos = text.split(System.getProperty("line.separator"));
 		String[] user;
@@ -65,13 +69,32 @@ public class Login {
 			System.out.println("false Password");
 			return false;
 		}
-		System.out.println(systemDataDecrypted);
+		//System.out.println(systemDataDecrypted);
 		userInfos = systemDataDecrypted.split(";"+System.getProperty("line.separator"));
 		
-		if(!userInfos[0].substring(0, 9).equals(fullName)) return false;
-		if(!userInfos[1].substring(0, 9).equals(username)) return false;
-		if(!userInfos[2].substring(0, 9).equals(String.valueOf(password))) return false;
+		if(!userInfos[0].substring(9).equals(fullName)) {
+			System.out.println(userInfos[0].substring(9)+":"+fullName); 
+			return false;
+		}
+		if(!userInfos[1].substring(9).equals(username)){
+			System.out.println(userInfos[1].substring(9)+":"+username); 
+			return false;
+		}
+		if(!userInfos[2].substring(9).equals(String.valueOf(password))){
+			System.out.println(userInfos[2].substring(9)+":"+String.valueOf(password)); 
+			return false;
+		}
 		
 		return true;
 	}
+	
+	public static Main getMain()
+	{
+		return main;
+	}
+	private static void setMain(String fullName, char[] password, String username)
+	{
+		main = new Main(fullName,password,username);
+	}
+	
 }

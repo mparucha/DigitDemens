@@ -74,7 +74,11 @@ public class LoginView extends JPanel {
             // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
             public void actionPerformed(ActionEvent e) {
             	try {
-					Login.login(username.getText(), password.getPassword());
+            		if(Login.login(username.getText(), password.getPassword()))
+            			{
+            				DigitDemens.getdDView().setView("Main");
+            			}
+            			
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -24,7 +24,7 @@ public class DigitDemensView extends JFrame{
 	private JMenu options;
 	private JMenuItem directory;
 	
-	//other
+	//Views
 	private LoginView loginView;
 	private RegisterView registerView;
 	private MainView mainView;
@@ -52,7 +52,7 @@ public class DigitDemensView extends JFrame{
 		cardPanel.add(loginView, "Login");
 		cardPanel.add(registerView, "Register");
 		cardPanel.add(mainView, "Main");
-		cardLayout.show(cardPanel, "Main");
+		cardLayout.show(cardPanel, "Login");
 		
 		menuBar = new JMenuBar();
 		options = new JMenu("Options");
@@ -68,4 +68,18 @@ public class DigitDemensView extends JFrame{
 	{
 		cardLayout.show(cardPanel, view);
 	}
+	
+	public void setData()
+	{
+		try
+		{
+			mainView.setData();
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
+	}
+
 }
