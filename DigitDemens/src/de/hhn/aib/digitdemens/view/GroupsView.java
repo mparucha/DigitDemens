@@ -6,7 +6,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
-public class InfoView extends JPanel{
+public class GroupsView extends JPanel{
 
 	GridBagLayout gbl = new GridBagLayout();
 	GridBagConstraints gbc = new GridBagConstraints();
@@ -15,10 +15,9 @@ public class InfoView extends JPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public InfoView ()
+	public GroupsView ()
 	{
 		setBackground(Color.LIGHT_GRAY);
-		setLayout(gbl);
-		
+		setLayout(gbl);	
 	}
 }

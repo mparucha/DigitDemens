@@ -8,7 +8,6 @@ import de.hhn.aib.digitdemens.utility.Utility;
 public class Login {
 	//TODO
 	public static String workingDir = "C:\\Users\\Marek Parucha\\DigitalDemens\\";
-	private static Main main;
 	private static boolean loggedIn = false;
 	
 	public static boolean login(String username, char[] password) throws Exception
@@ -20,7 +19,7 @@ public class Login {
 		if(userPath.equals(systemPath)) return loggedIn;
 		if(!checkLoginData(username, password, userPath, fullName)) return loggedIn;
 		loggedIn = true;
-		setMain(fullName, password, username);
+		Main.setMain(fullName,password,username);
 		return loggedIn;
 	}
 	//TODO
@@ -69,7 +68,7 @@ public class Login {
 			System.out.println("false Password");
 			return false;
 		}
-		//System.out.println(systemDataDecrypted);
+		System.out.println(systemDataDecrypted);
 		userInfos = systemDataDecrypted.split(";"+System.getProperty("line.separator"));
 		
 		if(!userInfos[0].substring(9).equals(fullName)) {
@@ -88,13 +87,5 @@ public class Login {
 		return true;
 	}
 	
-	public static Main getMain()
-	{
-		return main;
-	}
-	private static void setMain(String fullName, char[] password, String username)
-	{
-		main = new Main(fullName,password,username);
-	}
 	
 }

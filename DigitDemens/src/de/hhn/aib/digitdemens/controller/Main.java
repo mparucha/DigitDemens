@@ -8,19 +8,22 @@ import de.hhn.aib.digitdemens.utility.Utility;
 
 public class Main {
 	public static String workingDir = "C:\\Users\\Marek Parucha\\DigitalDemens\\";
-	private String fullName;
-	private char[] password;
-	private String username;
+	private static String fullName;
+	private static char[] password;
+	private static String username;
+	private static boolean initialized = false;
 	
-	public Main(String fullName, char[] password, String username)
+	
+	public static void setMain(String fullName1, char[] password1, String username1)
 	{
-		this.fullName=fullName;
-		this.password=password;
-		this.username=username;
+		fullName=fullName1;
+		password=password1;
+		username=username1;
+		initialized = true;
 		DigitDemens.getdDView().setData();
 	}
 	//List <Groups>
-	public Groups[] getGroups() throws Exception
+	public static Groups[] getGroups() throws Exception
 	{
 		File logPath = new File(workingDir+fullName+"\\logFile.dd");
 		String decryptedLog = "";
@@ -36,24 +39,25 @@ public class Main {
 		groupsText = new String[groupsStrings.length];
 		try
 		{
-			for(int i = 0; i < groupsStrings.length; i++) groupsPath[i] = new File(workingDir + fullName +"\\"+groupsList[i]+".dd");
+			for(int i = 0; i < groupsStrings.length; i++) groupsPath[i] = new File(workingDir + fullName +"\\"+groupsList[i].getName()+".dd");
 			for(int i = 0; i < groupsPath.length; i++) groupsText[i]=Utility.decryptFile(groupsPath[i], String.valueOf(password));
 			for(int i = 0; i < groupsText.length; i++) groupsList[i]=new Groups(groupsStrings[i], groupsPath[i], username, fullName, groupsText[i]);
 		}
 		catch (Exception e)
 		{
 			System.out.println("ERROR: couldnt read groups");
+
 		}
 		System.out.println(groupsList);
-		System.out.println(new int[0]);
 		return groupsList;
 	}
 	
-	public String[] getGroupsString(String text)
+	public static String[] getGroupsString(String text)
 	{
 		String[] userInfos = text.split(System.getProperty("line.separator"));
 		try{
 			String[] groupsString = (userInfos[3].substring(7)).split(";");
+			if(groupsString[0].equals("")) throw new StringIndexOutOfBoundsException();
 			return groupsString;
 		}
 		catch(StringIndexOutOfBoundsException e)
@@ -64,9 +68,14 @@ public class Main {
 		
 	}
 	//TODO
-	public void addGroup()
+	public static void addGroup()
 	{
 		
+	}
+	
+	public static boolean getInitialized()
+	{
+		return initialized;
 	}
 	
 }
