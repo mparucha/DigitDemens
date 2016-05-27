@@ -35,6 +35,7 @@ public class MainView extends JPanel{
 	private JPanel cardPanel;
 	private CardLayout cardLayout;
 	private GroupsView groupsView;
+	private InfoView infoView;
 	private GridBagConstraints gbc;
 	private GridBagLayout gbl;
 	
@@ -53,10 +54,6 @@ public class MainView extends JPanel{
 		gbl.rowHeights = new int[]{100,20,420,150};
 		setLayout(gbl);
 		
-		cardLayout = new CardLayout();
-		cardPanel = new JPanel();
-		cardPanel.setLayout(cardLayout);
-		cardPanel.add(groupsView, "GroupsView");
 		
 		welcomeLabel = new JLabel("Hello, Marek Parucha");
 		welcomeLabel.setFont(new Font("Arial", Font.PLAIN, 25));
@@ -67,9 +64,17 @@ public class MainView extends JPanel{
 		addGroupButton = new JButton("add..");
 		gbc = new GridBagConstraints();
 		groupsView = new GroupsView();
+		infoView = new InfoView();
 		groupsView.setPreferredSize(new Dimension(700,400));
 		groupsList.setFixedCellHeight(20);
 		scrollBar = new JScrollPane(groupsList,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		
+
+		cardLayout = new CardLayout();
+		cardPanel = new JPanel();
+		cardPanel.setLayout(cardLayout);
+		cardPanel.add(groupsView, "GroupsView");
+		cardPanel.add(infoView,"InfoView");
 	}
 	
 	public void setMain()
@@ -90,7 +95,7 @@ public class MainView extends JPanel{
 		Utility.makeGBC(gbc, 1, 2, -1, -1, -1, -1, -1, GridBagConstraints.EAST, -1, -1);
 		add(cardPanel,gbc);
 		
-		cardLayout.show(cardPanel,"GroupsView");
+		cardLayout.show(cardPanel,"InfoView");
 
 	}
 	
