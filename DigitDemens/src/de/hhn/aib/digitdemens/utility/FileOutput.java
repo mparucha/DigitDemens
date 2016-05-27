@@ -3,6 +3,8 @@ package de.hhn.aib.digitdemens.utility;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 
@@ -134,5 +136,23 @@ public class FileOutput {
 		systemFile+=data;
 		byte[] systemFileBytes = crypt.encrypt(systemFile);
 		return systemFileBytes;
+	}
+	
+	public boolean writeGroup(Groups group) throws Exception
+	{
+		Crypt crypt = new Crypt(KeyGen.generatedKey(password),"AES");
+		FileOutputStream groupsFile = new FileOutputStream(group.getPath().getAbsolutePath()+"\\"+group.getName()+".ser");
+		
+		try(ObjectOutputStream fos = new ObjectOutputStream(crypt.encryptOutputStream(groupsFile)))
+		{
+		fos.writeObject(group);
+		}
+		catch(IOException e)
+		{
+			System.out.println("cant write GroupsFile");
+			return false;
+		}
+		return true;
+		
 	}
 }

@@ -2,7 +2,9 @@ package de.hhn.aib.digitdemens.utility;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class FileInput {
 	
@@ -25,5 +27,18 @@ public class FileInput {
 		fis.close();
 		return builder.toString().trim();
 		
+	}
+	
+	public Groups readGroup(char[] password) throws Exception
+	{
+		Crypt crypt = new Crypt(KeyGen.generatedKey(String.valueOf(password)),"AES");
+		FileInputStream fis = new FileInputStream(path);
+		try(ObjectInputStream ois = new ObjectInputStream(crypt.decryptInputStream(fis)))
+		{
+			return (Groups) ois.readObject();
+		} catch (ClassNotFoundException e) {
+			System.out.println("classNotFound");
+		}
+		return new Groups(null, path, null, null, null);
 	}
 }

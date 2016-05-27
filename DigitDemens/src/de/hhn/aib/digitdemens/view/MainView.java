@@ -30,7 +30,7 @@ public class MainView extends JPanel{
 	private JButton deleteGroupButton;
 	private JButton addGroupButton;
 	private JScrollPane scrollBar;
-	private JPanel infoView;
+	private InfoView infoView;
 	private GridBagConstraints gbc;
 	private GridBagLayout gbl;
 	
@@ -56,11 +56,10 @@ public class MainView extends JPanel{
 		deleteGroupButton = new JButton("delete..");
 		addGroupButton = new JButton("add..");
 		gbc = new GridBagConstraints();
-		infoView = new JPanel();
+		infoView = new InfoView();
 		infoView.setPreferredSize(new Dimension(700,400));
 		groupsList.setFixedCellHeight(20);
 		scrollBar = new JScrollPane(groupsList,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		infoView.setBackground(Color.BLACK);
 	}
 	
 	public void setMain()

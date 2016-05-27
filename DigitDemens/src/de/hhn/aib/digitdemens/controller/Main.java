@@ -38,7 +38,7 @@ public class Main {
 		{
 			for(int i = 0; i < groupsStrings.length; i++) groupsPath[i] = new File(workingDir + fullName +"\\"+groupsList[i]+".dd");
 			for(int i = 0; i < groupsPath.length; i++) groupsText[i]=Utility.decryptFile(groupsPath[i], String.valueOf(password));
-			for(int i = 0; i < groupsText.length; i++) groupsList[i]=new Groups(groupsStrings[i], groupsPath[i], username, password, fullName, groupsText[i]);
+			for(int i = 0; i < groupsText.length; i++) groupsList[i]=new Groups(groupsStrings[i], groupsPath[i], username, fullName, groupsText[i]);
 		}
 		catch (Exception e)
 		{

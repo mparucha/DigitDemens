@@ -77,6 +77,7 @@ public class LoginView extends JPanel {
             		if(Login.login(username.getText(), password.getPassword()))
             			{
             				DigitDemens.getdDView().setView("Main");
+            				
             			}
             			
 				} catch (Exception e1) {
