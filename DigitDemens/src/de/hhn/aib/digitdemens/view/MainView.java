@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
 
+import de.hhn.aib.digitdemens.controller.Accounts;
 import de.hhn.aib.digitdemens.controller.Groups;
 import de.hhn.aib.digitdemens.controller.Main;
 import de.hhn.aib.digitdemens.utility.Utility;
@@ -33,16 +34,22 @@ public class MainView extends JPanel{
 	
 	private JLabel welcomeLabel;
 	private JLabel groupsLabel;
+	private JLabel accountsLabel;
 	private JList <String> groupsList;
+	private JList <String> accountsList;
 	private JButton deleteGroupButton;
 	private JButton addGroupButton;
-	private JScrollPane scrollBar;
+	private JButton deleteAccountButton;
+	private JButton addAccountButton;
+	private JScrollPane scrollBarGroups;
+	private JScrollPane scrollBarAccounts;
 	private JPanel cardPanel;
 	private CardLayout cardLayout;
 	private GroupsView groupsView;
 	private InfoView infoView;
 	private GridBagConstraints gbc;
 	private GridBagLayout gbl;
+	private Accounts[] accounts;
 	private Groups[] groups;
 	private String[] groupsString;
 	
@@ -58,23 +65,29 @@ public class MainView extends JPanel{
 	{
 		gbl = new GridBagLayout();
 		gbl.columnWidths = new int[]{250,20,800};
-		gbl.rowHeights = new int[]{100,20,500,100};
+		gbl.rowHeights = new int[]{75,20,250,50,20,250,50};
 		setLayout(gbl);
 		
 		
 		welcomeLabel = new JLabel("Hello, Marek Parucha");
 		welcomeLabel.setFont(new Font("Arial", Font.PLAIN, 25));
 		groupsLabel = new JLabel("Groups:");
+		accountsLabel = new JLabel("Accounts:");
 		groupsList = new JList<String> ();
 		groupsList.setVisibleRowCount(20);
+		accountsList = new JList<String> ();
+		accountsList.setVisibleRowCount(20);
 		deleteGroupButton = new JButton("delete..");
 		addGroupButton = new JButton("add..");
+		deleteAccountButton = new JButton("delete..");
+		addAccountButton = new JButton("add..");
 		gbc = new GridBagConstraints();
 		groupsView = new GroupsView(this);
 		infoView = new InfoView(this);
 		groupsView.setPreferredSize(new Dimension(700,400));
 		groupsList.setFixedCellHeight(20);
-		scrollBar = new JScrollPane(groupsList,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollBarGroups = new JScrollPane(groupsList,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollBarAccounts = new JScrollPane(accountsList,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 
 		cardLayout = new CardLayout();
@@ -94,12 +107,20 @@ public class MainView extends JPanel{
 		Utility.makeGBC(gbc, 0, 1, -1, -1, -1, -1, -1, -1, -1, -1);
 		add(groupsLabel,gbc);
 		Utility.makeGBC(gbc, 0, 2, -1, -1, GridBagConstraints.BOTH, -1, -1, -1, -1, -1);
-		add(scrollBar,gbc);
+		add(scrollBarGroups,gbc);
+		Utility.makeGBC(gbc, 0, 4, -1, -1, GridBagConstraints.NONE, -1, -1, -1, -1, -1);
+		add(accountsLabel,gbc);
+		Utility.makeGBC(gbc, 0, 5, -1, -1, GridBagConstraints.BOTH, -1, -1, GridBagConstraints.NORTHWEST, -1, -1);
+		add(scrollBarAccounts,gbc);
 		Utility.makeGBC(gbc, 0, 3, -1, -1, GridBagConstraints.NONE, -1, -1, GridBagConstraints.NORTHWEST, -1, -1);
 		add(deleteGroupButton,gbc);
 		Utility.makeGBC(gbc, 0, 3, -1, -1, -1, -1, -1, GridBagConstraints.NORTHEAST, -1, -1);
 		add(addGroupButton,gbc);
-		Utility.makeGBC(gbc, 2, 2, -1, -1, GridBagConstraints.BOTH, -1, -1, GridBagConstraints.EAST, -1, -1);
+		Utility.makeGBC(gbc, 0, 6, -1, -1, GridBagConstraints.NONE, -1, -1, GridBagConstraints.NORTHWEST, -1, -1);
+		add(deleteAccountButton,gbc);
+		Utility.makeGBC(gbc, 0, 6, -1, -1, -1, -1, -1, GridBagConstraints.NORTHEAST, -1, -1);
+		add(addAccountButton,gbc);
+		Utility.makeGBC(gbc, 2, 2, -1, 4, GridBagConstraints.BOTH, -1, -1, GridBagConstraints.EAST, -1, -1);
 		add(cardPanel,gbc);
 		
 		cardLayout.show(cardPanel,"InfoView");
