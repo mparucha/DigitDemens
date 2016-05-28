@@ -115,7 +115,7 @@ public class FileOutput {
 			
 			for(int i = 0; i<data.length; i++)
 			{
-					if(data[i]!=""|| data[i]!=null)logFile+=data[i]+";";
+					if(!data[i].trim().isEmpty()) logFile+=data[i]+";";
 			}
 		byte[] logfileBytes = crypt.encrypt(logFile);
 		return logfileBytes;
