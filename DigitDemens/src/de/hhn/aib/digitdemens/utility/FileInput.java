@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import de.hhn.aib.digitdemens.controller.Groups;
+
 public class FileInput {
 	
 	File path;
@@ -14,6 +16,7 @@ public class FileInput {
 	{
 		this.path = path;
 	}
+	
 	
 	public String readFromFileToString() throws IOException
 	{
@@ -40,5 +43,10 @@ public class FileInput {
 			System.out.println("classNotFound");
 		}
 		return new Groups(null, path, null, null, null);
+	}
+	
+	public void setPath(File path)
+	{
+		this.path = path;
 	}
 }

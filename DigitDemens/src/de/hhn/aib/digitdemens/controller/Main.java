@@ -3,7 +3,8 @@ package de.hhn.aib.digitdemens.controller;
 import java.io.File;
 
 import de.hhn.aib.digitdemens.DigitDemens;
-import de.hhn.aib.digitdemens.utility.Groups;
+import de.hhn.aib.digitdemens.utility.FileInput;
+import de.hhn.aib.digitdemens.utility.FileOutput;
 import de.hhn.aib.digitdemens.utility.Utility;
 
 public class Main {
@@ -26,6 +27,7 @@ public class Main {
 	public static Groups[] getGroups() throws Exception
 	{
 		File logPath = new File(workingDir+fullName+"\\logFile.dd");
+		FileInput fi = new FileInput(logPath);
 		String decryptedLog = "";
 		String[] groupsStrings;
 		File[] groupsPath;
@@ -36,12 +38,14 @@ public class Main {
 		groupsStrings = getGroupsString(decryptedLog);
 		groupsPath = new File[groupsStrings.length];
 		groupsList = new Groups[groupsStrings.length];
-		groupsText = new String[groupsStrings.length];
 		try
 		{
-			for(int i = 0; i < groupsStrings.length; i++) groupsPath[i] = new File(workingDir + fullName +"\\"+groupsList[i].getName()+".dd");
-			for(int i = 0; i < groupsPath.length; i++) groupsText[i]=Utility.decryptFile(groupsPath[i], String.valueOf(password));
-			for(int i = 0; i < groupsText.length; i++) groupsList[i]=new Groups(groupsStrings[i], groupsPath[i], username, fullName, groupsText[i]);
+			for(int i = 0; i < groupsStrings.length; i++) groupsPath[i] = new File(workingDir + fullName +"\\"+groupsStrings[i]+".ser");
+			for(int i = 0; i < groupsPath.length; i++)
+			{
+				fi.setPath(groupsPath[i]);
+				groupsList[i]=fi.readGroup(password);
+			}
 		}
 		catch (Exception e)
 		{
@@ -67,9 +71,66 @@ public class Main {
 		
 		
 	}
-	//TODO
-	public static void addGroup()
+	
+	public static String[] addGroupsString(String name, String text)
 	{
+		String[] newGroupsString;
+		String[] userInfos = text.split(System.getProperty("line.separator"));
+		try{
+			String[] groupsString = (userInfos[3].substring(7)).split(";");
+			newGroupsString = new String[groupsString.length+1];
+			for(int i = 0; i<newGroupsString.length-1;i++) newGroupsString[i] = groupsString[i];
+			newGroupsString[newGroupsString.length-1] = name;
+			
+			return newGroupsString;
+		}
+		catch(StringIndexOutOfBoundsException e)
+		{
+			return new String[0];
+		}
+		
+	}
+	public static String[] deleteGroupsString(String name, String text)
+	{
+		String[] newGroupsString;
+		String[] userInfos = text.split(System.getProperty("line.separator"));
+		try{
+			String[] groupsString = (userInfos[3].substring(7)).split(";");
+			newGroupsString = new String[groupsString.length-1];
+			for(int i = 0,j = 0; i<newGroupsString.length;i++,j++)
+			{
+				if(!groupsString[j].equals(name)) newGroupsString[i] = groupsString[j];
+				else i--;
+			}
+			
+			return newGroupsString;
+		}
+		catch(StringIndexOutOfBoundsException e)
+		{
+			return new String[0];
+		}
+		
+	}
+	//TODO
+	public static void addGroup(String name, String description) throws Exception
+	{
+		String[] data = addGroupsString(name, Utility.decryptFile(new File(workingDir+fullName+"\\logFile.dd"), String.valueOf(password)));
+		FileOutput fo = new FileOutput(fullName, username, String.valueOf(password));
+		fo.writeGroupToDir(new Groups(name, new File(workingDir+fullName+"\\"+name+".ser"), username, fullName, description));
+		fo.writeLogFile(fo.makeEncryptedLogFile(data));
+		
+		
+	}
+	
+	public static void deleteGroup(Groups group) throws Exception
+	{
+		String[] data = deleteGroupsString(group.getName(), Utility.decryptFile(new File(workingDir+fullName+"\\logFile.dd"), String.valueOf(password)));
+		File groupFile = group.getPath();
+		FileOutput fo = new FileOutput(fullName, username, String.valueOf(password));
+		fo.writeLogFile(fo.makeEncryptedLogFile(data));
+		groupFile.delete();
+		
+		
 		
 	}
 	

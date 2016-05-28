@@ -1,8 +1,9 @@
-package de.hhn.aib.digitdemens.utility;
+package de.hhn.aib.digitdemens.controller;
 
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+
 
 public class Groups implements Serializable{
 
@@ -14,7 +15,7 @@ public class Groups implements Serializable{
 	private File path;
 	private String username;
 	private String fullName;
-	private String text;
+	private String description;
 	private ArrayList <Accounts> accounts;
 	
 	/**
@@ -23,15 +24,15 @@ public class Groups implements Serializable{
 	 * @param path
 	 * @param username
 	 * @param fullName
-	 * @param text
+	 * @param description
 	 */
-	public Groups(String name, File path, String username, String fullName, String text)
+	public Groups(String name, File path, String username, String fullName, String description)
 	{
 		this.name = name;
 		this.path = path;
 		this.username = username;
 		this.fullName = fullName;
-		this.text = text;
+		this.description = description;
 		accounts = new ArrayList <Accounts>();
 	}
 	

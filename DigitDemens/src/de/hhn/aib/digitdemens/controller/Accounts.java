@@ -1,4 +1,4 @@
-package de.hhn.aib.digitdemens.utility;
+package de.hhn.aib.digitdemens.controller;
 
 import java.io.Serializable;
 

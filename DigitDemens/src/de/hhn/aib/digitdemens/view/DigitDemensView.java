@@ -9,6 +9,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import de.hhn.aib.digitdemens.DigitDemens;
+import de.hhn.aib.digitdemens.controller.Login;
+
 
 public class DigitDemensView extends JFrame{
 

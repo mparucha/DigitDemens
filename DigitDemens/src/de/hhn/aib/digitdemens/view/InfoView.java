@@ -14,9 +14,12 @@ public class InfoView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private MainView mainView;
 
-	public InfoView ()
+	public InfoView (MainView mainView)
 	{
+		this.mainView = mainView;
 		setBackground(Color.LIGHT_GRAY);
 		setLayout(gbl);	
 	}

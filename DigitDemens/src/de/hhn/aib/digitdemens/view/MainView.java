@@ -6,17 +6,22 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
 
-import de.hhn.aib.digitdemens.controller.Login;
+import de.hhn.aib.digitdemens.controller.Groups;
 import de.hhn.aib.digitdemens.controller.Main;
-import de.hhn.aib.digitdemens.utility.Groups;
 import de.hhn.aib.digitdemens.utility.Utility;
 
 public class MainView extends JPanel{
@@ -38,6 +43,7 @@ public class MainView extends JPanel{
 	private InfoView infoView;
 	private GridBagConstraints gbc;
 	private GridBagLayout gbl;
+	private Groups[] groups;
 	
 	public MainView()
 	{
@@ -63,8 +69,8 @@ public class MainView extends JPanel{
 		deleteGroupButton = new JButton("delete..");
 		addGroupButton = new JButton("add..");
 		gbc = new GridBagConstraints();
-		groupsView = new GroupsView();
-		infoView = new InfoView();
+		groupsView = new GroupsView(this);
+		infoView = new InfoView(this);
 		groupsView.setPreferredSize(new Dimension(700,400));
 		groupsList.setFixedCellHeight(20);
 		scrollBar = new JScrollPane(groupsList,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -99,20 +105,55 @@ public class MainView extends JPanel{
 
 	}
 	
-	public void initListener()
-	{
-		
-	}
 	
 	public void setData() throws Exception
 	{
 		try {
-			groupsList.setListData(Main.getGroups());
+			groups = Main.getGroups();
+			groupsList.setListData(groups);
 		} catch (NullPointerException e) {
 			//groupsList.setListData(new Groups[0]);
 			//e.printStackTrace();
 		}
 		
+	}
+	
+	public void initListener()
+	{
+		addGroupButton.addActionListener(new ActionListener() {
+            // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
+            public void actionPerformed(ActionEvent e) {
+            	cardLayout.show(cardPanel, "GroupsView");
+            }
+        });
+		deleteGroupButton.addActionListener(new ActionListener() {
+            // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
+            public void actionPerformed(ActionEvent e) {
+            	if(groupsList.getSelectedValue()!= null)
+            	{
+            		
+	            	try {
+						Main.deleteGroup(groupsList.getSelectedValue());
+					} catch (Exception e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+	            	try {
+						setData();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+            	}
+            }
+        });
+		
+	}
+	
+	public void setView(String card) throws Exception
+	{
+		cardLayout.show(cardPanel, card);
+		setData();
 	}
 
 }

@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-
+import de.hhn.aib.digitdemens.controller.Groups;
 import de.hhn.aib.digitdemens.controller.Registration;
 
 public class FileOutput {
@@ -102,7 +102,7 @@ public class FileOutput {
 		return true;
 	}
 	
-	
+	//TODO
 	public byte[] makeEncryptedLogFile(String[] data) throws Exception
 	{
 		Crypt crypt = new Crypt(KeyGen.generatedKey(password),"AES");
@@ -115,12 +115,13 @@ public class FileOutput {
 			
 			for(int i = 0; i<data.length; i++)
 			{
-					logFile+=data[i]+";";
+					if(data[i]!=""|| data[i]!=null)logFile+=data[i]+";";
 			}
 		byte[] logfileBytes = crypt.encrypt(logFile);
 		return logfileBytes;
 	}
-	//TODO
+	
+	
 	public byte[] makeEncryptedSystemFile(String pass) throws Exception
 	{
 		Crypt crypt = new Crypt(KeyGen.generatedKey(pass),"AES");
@@ -138,10 +139,10 @@ public class FileOutput {
 		return systemFileBytes;
 	}
 	
-	public boolean writeGroup(Groups group) throws Exception
+	public boolean writeGroupToDir(Groups group) throws Exception
 	{
 		Crypt crypt = new Crypt(KeyGen.generatedKey(password),"AES");
-		FileOutputStream groupsFile = new FileOutputStream(group.getPath().getAbsolutePath()+"\\"+group.getName()+".ser");
+		FileOutputStream groupsFile = new FileOutputStream(group.getPath().getAbsolutePath());
 		
 		try(ObjectOutputStream fos = new ObjectOutputStream(crypt.encryptOutputStream(groupsFile)))
 		{
@@ -155,4 +156,5 @@ public class FileOutput {
 		return true;
 		
 	}
+	
 }
