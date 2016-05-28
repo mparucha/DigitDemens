@@ -139,4 +139,9 @@ public class Main {
 		return initialized;
 	}
 	
+	public static String getFullName()
+	{
+		return fullName;
+	}
+	
 }

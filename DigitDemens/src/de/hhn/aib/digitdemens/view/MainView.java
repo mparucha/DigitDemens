@@ -33,7 +33,7 @@ public class MainView extends JPanel{
 	
 	private JLabel welcomeLabel;
 	private JLabel groupsLabel;
-	private JList <Groups> groupsList;
+	private JList <String> groupsList;
 	private JButton deleteGroupButton;
 	private JButton addGroupButton;
 	private JScrollPane scrollBar;
@@ -44,6 +44,7 @@ public class MainView extends JPanel{
 	private GridBagConstraints gbc;
 	private GridBagLayout gbl;
 	private Groups[] groups;
+	private String[] groupsString;
 	
 	public MainView()
 	{
@@ -56,15 +57,15 @@ public class MainView extends JPanel{
 	public void init()
 	{
 		gbl = new GridBagLayout();
-		gbl.columnWidths = new int[]{250,800};
-		gbl.rowHeights = new int[]{100,20,420,150};
+		gbl.columnWidths = new int[]{250,20,800};
+		gbl.rowHeights = new int[]{100,20,500,100};
 		setLayout(gbl);
 		
 		
 		welcomeLabel = new JLabel("Hello, Marek Parucha");
 		welcomeLabel.setFont(new Font("Arial", Font.PLAIN, 25));
 		groupsLabel = new JLabel("Groups:");
-		groupsList = new JList<Groups> ();
+		groupsList = new JList<String> ();
 		groupsList.setVisibleRowCount(20);
 		deleteGroupButton = new JButton("delete..");
 		addGroupButton = new JButton("add..");
@@ -92,13 +93,13 @@ public class MainView extends JPanel{
 		add(welcomeLabel,gbc);
 		Utility.makeGBC(gbc, 0, 1, -1, -1, -1, -1, -1, -1, -1, -1);
 		add(groupsLabel,gbc);
-		Utility.makeGBC(gbc, 0, 2, -1, -1, -1, -1, -1, -1, -1, -1);
+		Utility.makeGBC(gbc, 0, 2, -1, -1, GridBagConstraints.BOTH, -1, -1, -1, -1, -1);
 		add(scrollBar,gbc);
-		Utility.makeGBC(gbc, 0, 3, -1, -1, -1, -1, -1, GridBagConstraints.NORTHWEST, -1, -1);
+		Utility.makeGBC(gbc, 0, 3, -1, -1, GridBagConstraints.NONE, -1, -1, GridBagConstraints.NORTHWEST, -1, -1);
 		add(deleteGroupButton,gbc);
 		Utility.makeGBC(gbc, 0, 3, -1, -1, -1, -1, -1, GridBagConstraints.NORTHEAST, -1, -1);
 		add(addGroupButton,gbc);
-		Utility.makeGBC(gbc, 1, 2, -1, -1, -1, -1, -1, GridBagConstraints.EAST, -1, -1);
+		Utility.makeGBC(gbc, 2, 2, -1, -1, GridBagConstraints.BOTH, -1, -1, GridBagConstraints.EAST, -1, -1);
 		add(cardPanel,gbc);
 		
 		cardLayout.show(cardPanel,"InfoView");
@@ -110,7 +111,9 @@ public class MainView extends JPanel{
 	{
 		try {
 			groups = Main.getGroups();
-			groupsList.setListData(groups);
+			groupsString = new String[groups.length];
+			for(int i=0; i< groups.length; i++) groupsString[i] = groups[i].getName();
+			groupsList.setListData(groupsString);
 		} catch (NullPointerException e) {
 			//groupsList.setListData(new Groups[0]);
 			//e.printStackTrace();
@@ -133,7 +136,8 @@ public class MainView extends JPanel{
             	{
             		
 	            	try {
-						Main.deleteGroup(groupsList.getSelectedValue());
+	            		
+						Main.deleteGroup(groups[groupsList.getSelectedIndex()]);
 					} catch (Exception e2) {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
