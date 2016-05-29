@@ -71,7 +71,7 @@ public class DigitDemensView extends JFrame{
 	{
 		try
 		{
-			mainView.setData();
+			mainView.setGroups();
 		}
 		catch(Exception e)
 		{

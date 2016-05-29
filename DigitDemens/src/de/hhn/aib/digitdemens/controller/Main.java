@@ -1,6 +1,9 @@
 package de.hhn.aib.digitdemens.controller;
 
 import java.io.File;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import de.hhn.aib.digitdemens.DigitDemens;
 import de.hhn.aib.digitdemens.utility.FileInput;
@@ -130,8 +133,37 @@ public class Main {
 		fo.writeLogFile(fo.makeEncryptedLogFile(data));
 		groupFile.delete();
 		
-		
-		
+	}
+	
+	public static Accounts[] getAccounts(Groups group) throws Exception
+	{
+		ArrayList <Accounts> accs = group.getAccounts();
+		Accounts[] accounts = new Accounts[accs.size()];
+		accounts = accs.toArray(accounts);
+		return accounts;
+	}
+	
+	public static void addAccount(String name, String description, String usernameAccount, String email, char[] passwordAccount, String url, String passwordHint, LocalDateTime creationDate, String info, Groups group)
+	{
+		FileOutput fo = new FileOutput(fullName, username, String.valueOf(password));
+		group.addAccount(new Accounts(name,description,usernameAccount,email,passwordAccount,url,passwordHint, LocalDateTime.now(),info));
+		try {
+			fo.writeGroupToDir(group);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public static void deleteAccount(Accounts acc, Groups group)
+	{
+		FileOutput fo = new FileOutput(fullName, username, String.valueOf(password));
+		group.deleteAccount(acc);
+		try {
+			fo.writeGroupToDir(group);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static boolean getInitialized()

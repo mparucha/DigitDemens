@@ -7,10 +7,11 @@ import java.util.ArrayList;
 
 public class Groups implements Serializable{
 
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1209802156117962061L;
 	private String name;
 	private File path;
 	private String username;
@@ -40,6 +41,10 @@ public class Groups implements Serializable{
 	{
 		accounts.add(acc);
 	}
+	public void deleteAccount(Accounts acc)
+	{
+		accounts.remove(acc);
+	}
 	public String getName()
 	{
 		return name;
@@ -47,5 +52,10 @@ public class Groups implements Serializable{
 	public File getPath()
 	{
 		return path;
+	}
+	
+	public ArrayList <Accounts> getAccounts()
+	{
+		return accounts;
 	}
 }
