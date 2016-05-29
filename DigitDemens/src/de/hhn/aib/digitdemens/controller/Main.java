@@ -114,7 +114,19 @@ public class Main {
 		}
 		
 	}
-	//TODO
+	public static void editGroup(Groups group, String name, String description) throws Exception
+	{
+		deleteGroup(group);
+		String[] data = addGroupsString(name, Utility.decryptFile(new File(workingDir+fullName+"\\logFile.dd"), String.valueOf(password)));
+		FileOutput fo = new FileOutput(fullName, username, String.valueOf(password));
+		group.setName(name);
+		group.setDescription(description);
+		group.setPath(new File(workingDir+fullName+"\\"+name+".ser"));
+		fo.writeGroupToDir(group);
+		fo.writeLogFile(fo.makeEncryptedLogFile(data));
+	
+	}
+	
 	public static void addGroup(String name, String description) throws Exception
 	{
 		String[] data = addGroupsString(name, Utility.decryptFile(new File(workingDir+fullName+"\\logFile.dd"), String.valueOf(password)));
@@ -143,10 +155,30 @@ public class Main {
 		return accounts;
 	}
 	
+	public static void editAccount(String name, String description, String usernameAccount, String email, char[] passwordAccount, String url, String passwordHint, LocalDateTime lastEditedDate, String info, Groups group, Accounts acc)
+	{
+		FileOutput fo = new FileOutput(fullName, username, String.valueOf(password));
+		acc.setName(name);
+		acc.setDescription(description);
+		acc.setUsername(usernameAccount);
+		acc.setEmail(email);
+		acc.setPassword(passwordAccount);
+		acc.setUrl(url);
+		acc.setPasswordHint(passwordHint);
+		acc.setLastEditedDate(LocalDateTime.now());
+		acc.setInfo(info);
+		try {
+			fo.writeGroupToDir(group);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void addAccount(String name, String description, String usernameAccount, String email, char[] passwordAccount, String url, String passwordHint, LocalDateTime creationDate, String info, Groups group)
 	{
 		FileOutput fo = new FileOutput(fullName, username, String.valueOf(password));
-		group.addAccount(new Accounts(name,description,usernameAccount,email,passwordAccount,url,passwordHint, LocalDateTime.now(),info));
+		group.addAccount(new Accounts(name,description,usernameAccount,email,passwordAccount,url,passwordHint, LocalDateTime.now(),info, group));
 		try {
 			fo.writeGroupToDir(group);
 		} catch (Exception e) {

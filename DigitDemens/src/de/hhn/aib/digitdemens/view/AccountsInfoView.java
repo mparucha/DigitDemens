@@ -6,9 +6,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.time.LocalDateTime;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -46,10 +49,12 @@ public class AccountsInfoView extends JPanel{
 	private JLabel created;
 	private JLabel lastEdited;
 	private JTextArea info;
-	private JButton editButton;
-	private JButton saveButton;
+	private JButton editSaveButton;
+	private JButton deleteCancelButton;
+	private JCheckBox showPasswordBox;
 	private MainView mainView;
-	private Accounts currentAccount;
+	private Accounts account;
+	private boolean editable;
 	/**
 	 * 
 	 */
@@ -63,6 +68,7 @@ public class AccountsInfoView extends JPanel{
 		init();
 		setAccount();
 		initListener();
+		System.out.println(password.getEchoChar());
 	}
 	
 	public void init()
@@ -100,8 +106,9 @@ public class AccountsInfoView extends JPanel{
 		info.setEditable(false);
 		info.setLineWrap(true);
 		info.setWrapStyleWord(true);
-		editButton = new JButton("Edit");
-		saveButton = new JButton("Save");
+		editSaveButton = new JButton("Edit");
+		deleteCancelButton = new JButton("Delete");
+		showPasswordBox = new JCheckBox("Visible");
 	}
 	public void setAccount()
 	{
@@ -121,11 +128,11 @@ public class AccountsInfoView extends JPanel{
 		Utility.makeGBC(gbc, -1, 6, -1, -1, -1, -1, -1, -1, -1, -1);
 		add(passwordHintLabel,gbc);
 		Utility.makeGBC(gbc, -1, 7, -1, -1, -1, 1, -1, GridBagConstraints.WEST, -1, -1);
-		add(createdLabel,gbc);
-		Utility.makeGBC(gbc, -1, 8, -1, -1, -1, 1, -1, GridBagConstraints.WEST, -1, -1);
-		add(lastEditedLabel,gbc);
-		Utility.makeGBC(gbc, -1, 9, -1, -1, -1, -1, -1, -1, -1, -1);
 		add(infoLabel,gbc);
+		Utility.makeGBC(gbc, -1, 8, -1, -1, -1, 1, -1, GridBagConstraints.WEST, -1, -1);
+		add(createdLabel,gbc);
+		Utility.makeGBC(gbc, -1, 9, -1, -1, -1, -1, -1, -1, -1, -1);
+		add(lastEditedLabel,gbc);
 		
 		Utility.makeGBC(gbc, 1, 0, -1, -1, -1, 1, -1, GridBagConstraints.WEST, -1, -1);
 		add(name,gbc);
@@ -137,7 +144,9 @@ public class AccountsInfoView extends JPanel{
 		add(email,gbc);
 		Utility.makeGBC(gbc, -1, 4, -1, -1, -1, 1, -1, GridBagConstraints.WEST, -1, -1);
 		add(password,gbc);
-		Utility.makeGBC(gbc, -1, 5, -1, -1, -1, 1, -1, GridBagConstraints.WEST, -1, -1);
+		Utility.makeGBC(gbc, 2, 4, -1, -1, -1, 1, -1, GridBagConstraints.WEST, -1, -1);
+		add(showPasswordBox,gbc);
+		Utility.makeGBC(gbc, 1, 5, -1, -1, -1, 1, -1, GridBagConstraints.WEST, -1, -1);
 		add(url,gbc);
 		Utility.makeGBC(gbc, -1, 6, -1, -1, -1, 1, -1, GridBagConstraints.WEST, -1, -1);
 		add(passwordHint,gbc);
@@ -148,14 +157,18 @@ public class AccountsInfoView extends JPanel{
 		Utility.makeGBC(gbc, -1, 9, -1, -1, -1, 1, -1, GridBagConstraints.WEST, -1, -1);
 		add(lastEdited,gbc);
 		Utility.makeGBC(gbc, 1, 10, -1, -1, -1, -1, -1, GridBagConstraints.SOUTHEAST, -1, -1);
-		add(editButton,gbc);
+		add(editSaveButton,gbc);
 		Utility.makeGBC(gbc, 1, 10, -1, -1, -1, -1, -1, GridBagConstraints.SOUTHWEST, -1, -1);
-		add(saveButton,gbc);
+		add(deleteCancelButton,gbc);
 		
 	}
 	public void updateUI(Accounts acc)
 	{
-		currentAccount=acc;
+		editable = false;
+		editSaveButton.setText("edit");
+		deleteCancelButton.setText("delete");
+		showPasswordBox.setSelected(false);
+		account=acc;
 		name.setText(acc.getName());
 		description.setText(acc.getDescription());
 		username.setText(acc.getUsername());
@@ -169,19 +182,75 @@ public class AccountsInfoView extends JPanel{
 		
 	}
 	
+	public void setEditable(boolean editable)
+	{
+    		name.setEditable(editable);
+    		description.setEditable(editable);
+    		username.setEditable(editable);
+    		email.setEditable(editable);
+    		password.setEditable(editable);
+    		url.setEditable(editable);
+    		passwordHint.setEditable(editable);
+    		info.setEditable(editable);
+    		if(editable)
+    		{
+    			editSaveButton.setText("save");
+        		deleteCancelButton.setText("cancel");
+    		}
+    		else updateUI(account);
+    		this.editable = editable;
+	}
+	public boolean getEditable()
+	{
+		return editable;
+	}
+	
+	
+	
 	public void initListener()
 	{
-		editButton.addActionListener(new ActionListener() {
+		editSaveButton.addActionListener(new ActionListener() {
             // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
             public void actionPerformed(ActionEvent e) {
-            	
+            	if(getEditable())
+            	{
+            		Main.editAccount(name.getText(), description.getText(), username.getText(), email.getText(), password.getPassword(), url.getText(), passwordHint.getText(), LocalDateTime.now(), info.getText(), account.getGroup(),account);
+            		try {
+						mainView.setAccounts();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+            		setEditable(false);
+            	}
+            	else 
+            	{
+            		setEditable(true);
+            	}
             	
             }
         });
-		saveButton.addActionListener(new ActionListener() {
+		deleteCancelButton.addActionListener(new ActionListener() {
             // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
             public void actionPerformed(ActionEvent e) {
+            	if(getEditable())
+            	{
+            		setEditable(false);
+            	}
+            	else 
+            	{
+            		mainView.deleteAccount(account);
+            	}
             	
+            }
+        });
+		
+		showPasswordBox.addItemListener(new ItemListener() {
+            // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
+            public void itemStateChanged(ItemEvent  e) {
+            	if (e.getStateChange() == ItemEvent.SELECTED) password.setEchoChar((char) 0);
+            	else password.setEchoChar(('•'));
+                   
             }
         });
 		

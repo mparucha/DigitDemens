@@ -48,7 +48,7 @@ public class GroupsView extends JPanel{
 	{
 		nameLabel = new JLabel("Name of Group: ");
 		descriptionLabel = new JLabel("Description of Group: ");
-		name = new JTextField(11);
+		name = new JTextField(20);
 		description = new JTextArea(5,20);
 		description.setLineWrap(true);
 		description.setWrapStyleWord(true);
@@ -80,12 +80,8 @@ public class GroupsView extends JPanel{
             public void actionPerformed(ActionEvent e) {
             	try {
 					Main.addGroup(name.getText(), description.getText());
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-            	try {
 					mainView.setView("InfoView");
+					mainView.setGroups();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

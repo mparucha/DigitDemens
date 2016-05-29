@@ -39,15 +39,14 @@ public class MainView extends JPanel{
 	private JLabel accountsLabel;
 	private JList <String> groupsList;
 	private JList <String> accountsList;
-	private JButton deleteGroupButton;
 	private JButton addGroupButton;
-	private JButton deleteAccountButton;
 	private JButton addAccountButton;
 	private JScrollPane scrollBarGroups;
 	private JScrollPane scrollBarAccounts;
 	private JPanel cardPanel;
 	private CardLayout cardLayout;
 	private GroupsView groupsView;
+	private GroupsInfoView groupsInfoView;
 	private InfoView infoView;
 	private AccountsView accountsView;
 	private AccountsInfoView accountsInfoView;
@@ -83,12 +82,12 @@ public class MainView extends JPanel{
 		groupsList.setVisibleRowCount(20);
 		accountsList = new JList<String> ();
 		accountsList.setVisibleRowCount(20);
-		deleteGroupButton = new JButton("delete..");
 		addGroupButton = new JButton("add..");
-		deleteAccountButton = new JButton("delete..");
 		addAccountButton = new JButton("add..");
 		gbc = new GridBagConstraints();
 		groupsView = new GroupsView(this);
+		groupsInfoView = new GroupsInfoView(this);
+		groupsInfoView.setPreferredSize(new Dimension(700,400));
 		infoView = new InfoView(this);
 		groupsView.setPreferredSize(new Dimension(700,400));
 		accountsView = new AccountsView(this);
@@ -107,6 +106,7 @@ public class MainView extends JPanel{
 		cardPanel.add(infoView,"InfoView");
 		cardPanel.add(accountsView,"AccountsView");
 		cardPanel.add(accountsInfoView,"AccountsInfoView");
+		cardPanel.add(groupsInfoView,"GroupsInfoView");
 	}
 	
 	public void setMain()
@@ -122,15 +122,11 @@ public class MainView extends JPanel{
 		add(scrollBarGroups,gbc);
 		Utility.makeGBC(gbc, 0, 4, -1, -1, GridBagConstraints.NONE, -1, -1, -1, -1, -1);
 		add(accountsLabel,gbc);
-		Utility.makeGBC(gbc, 0, 5, -1, -1, GridBagConstraints.BOTH, -1, -1, GridBagConstraints.NORTHWEST, -1, -1);
+		Utility.makeGBC(gbc, 0, 5, -1, -1, GridBagConstraints.BOTH, -1, -1, GridBagConstraints.CENTER, -1, -1);
 		add(scrollBarAccounts,gbc);
 		Utility.makeGBC(gbc, 0, 3, -1, -1, GridBagConstraints.NONE, -1, -1, GridBagConstraints.NORTHWEST, -1, -1);
-		add(deleteGroupButton,gbc);
-		Utility.makeGBC(gbc, 0, 3, -1, -1, -1, -1, -1, GridBagConstraints.NORTHEAST, -1, -1);
 		add(addGroupButton,gbc);
-		Utility.makeGBC(gbc, 0, 6, -1, -1, GridBagConstraints.NONE, -1, -1, GridBagConstraints.NORTHWEST, -1, -1);
-		add(deleteAccountButton,gbc);
-		Utility.makeGBC(gbc, 0, 6, -1, -1, -1, -1, -1, GridBagConstraints.NORTHEAST, -1, -1);
+		Utility.makeGBC(gbc, 0, 6, -1, -1, -1, -1, -1, GridBagConstraints.NORTHWEST, -1, -1);
 		add(addAccountButton,gbc);
 		Utility.makeGBC(gbc, 2, 2, -1, 4, GridBagConstraints.BOTH, -1, -1, GridBagConstraints.EAST, -1, -1);
 		add(cardPanel,gbc);
@@ -165,6 +161,34 @@ public class MainView extends JPanel{
 		
 	}
 	
+	public void deleteGroup(Groups group)
+	{
+		try {
+			Main.deleteGroup(group);
+			currentGroup = null;
+			setGroups();
+			setAccounts();
+			setView("InfoView");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void deleteAccount(Accounts acc)
+	{
+		Main.deleteAccount(acc,acc.getGroup());
+		try {
+			setAccounts();
+			setView("InfoView");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void initListener()
 	{
 		groupsList.addListSelectionListener(new ListSelectionListener() {
@@ -173,6 +197,9 @@ public class MainView extends JPanel{
             	if(groupsList.getSelectedIndex()!=-1)
             	{
             		currentGroup = groups[groupsList.getSelectedIndex()];
+            		cardLayout.show(cardPanel, "GroupsInfoView");
+            		groupsInfoView.updateUI(currentGroup);
+            		accountsList.clearSelection();
 	            	try {
 						setAccounts();
 					} catch (Exception e1) {
@@ -189,9 +216,10 @@ public class MainView extends JPanel{
             	if(accountsList.getSelectedIndex()!=-1)
             	{
             		try {
-            			accountsInfoView.updateUI(accounts[accountsList.getSelectedIndex()]);
-						setView("AccountsInfoView");
-						
+            			int index = accountsList.getSelectedIndex();
+            			accountsInfoView.updateUI(accounts[index]);
+            			cardLayout.show(cardPanel, "AccountsInfoView");
+            			groupsList.clearSelection();
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -213,26 +241,15 @@ public class MainView extends JPanel{
             // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
             public void actionPerformed(ActionEvent e) {
             	cardLayout.show(cardPanel, "GroupsView");
+            	try {
+					setGroups();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
-		deleteGroupButton.addActionListener(new ActionListener() {
-            // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
-            public void actionPerformed(ActionEvent e) {
-            	if(groupsList.getSelectedValue()!= null)
-            	{
-            		
-	            	try {
-						Main.deleteGroup(currentGroup);
-						currentGroup = null;
-						setGroups();
-						setAccounts();
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-            	}
-            }
-		});
+		
             
             addAccountButton.addActionListener(new ActionListener() {
                 // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
@@ -247,31 +264,17 @@ public class MainView extends JPanel{
 					}
                 }
             });
-    		deleteAccountButton.addActionListener(new ActionListener() {
-                // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
-                public void actionPerformed(ActionEvent e) {
-                	if(accountsList.getSelectedValue()!= null)
-                	{
-                		
-    	            	try {
-    						Main.deleteAccount(accounts[accountsList.getSelectedIndex()],currentGroup);
-    						setGroups();
-    						setAccounts();
-    					} catch (Exception e1) {
-    						// TODO Auto-generated catch block
-    						e1.printStackTrace();
-    					}
-                	}
-                }
-        });
+    		
+       
 		
 	}
 	
 	public void setView(String card) throws Exception
 	{
 		cardLayout.show(cardPanel, card);
-		setGroups();
-		setAccounts();
+		//setGroups();
+		//setAccounts();
 	}
+	
 
 }

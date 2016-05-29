@@ -107,6 +107,7 @@ public class RegisterView extends JPanel {
             	if(Registration.register(username.getText(),preName.getText()+name.getText(),password.getPassword(), new String[0]))
             	{
             		System.out.println("registration done");
+            		DigitDemens.getdDView().setView("Login");
             	}
             	else System.out.println("registration failed");
             	

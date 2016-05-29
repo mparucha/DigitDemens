@@ -22,7 +22,7 @@ public class Accounts implements Serializable{
 	private LocalDateTime creationDate;
 	private LocalDateTime lastEditedDate;
 	private String info;
-	
+	private Groups group;
 	/**
 	 * 
 	 * @param name
@@ -35,7 +35,7 @@ public class Accounts implements Serializable{
 	 * @param creationDate
 	 * @param info
 	 */
-	public Accounts(String name, String description, String username, String email, char[] password, String url, String passwordHint, LocalDateTime creationDate, String info)
+	public Accounts(String name, String description, String username, String email, char[] password, String url, String passwordHint, LocalDateTime creationDate, String info, Groups group)
 	{
 		this.name = name;
 		this.description = description;
@@ -56,6 +56,7 @@ public class Accounts implements Serializable{
 		this.creationDate = creationDate;
 		this.lastEditedDate = creationDate;
 		this.info = info;
+		this.group = group;
 	}
 
 	public String getName() {
@@ -102,8 +103,17 @@ public class Accounts implements Serializable{
 		return url;
 	}
 
-	public void setUrl(URL url) {
-		this.url = url;
+	public void setUrl(String url) {
+		try {
+			this.url = new URL(url);
+		} catch (MalformedURLException e) {
+			try {
+				this.url = new URL("http://WrongURLGiven.com");
+			} catch (MalformedURLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	public String getPasswordHint() {
@@ -137,7 +147,15 @@ public class Accounts implements Serializable{
 	public void setInfo(String info) {
 		this.info = info;
 	}
+	public void setGroup(Groups group)
+	{
+		this.group = group;
+	}
 	
+	public Groups getGroup()
+	{
+		return group;
+	}
 
 
 }

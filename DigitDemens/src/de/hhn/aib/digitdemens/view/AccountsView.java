@@ -141,13 +141,10 @@ public class AccountsView extends JPanel{
             public void actionPerformed(ActionEvent e) {
             	try {
 					Main.addAccount(name.getText(), description.getText(), username.getText(), email.getText(), password.getPassword(), url.getText(), passwordHint.getText(), LocalDateTime.now(), info.getText(), group);
-
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-            	try {
 					mainView.setView("InfoView");
+					mainView.setAccounts();
+				} catch (NullPointerException e1) {
+					System.out.println("Please select Group.");
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
