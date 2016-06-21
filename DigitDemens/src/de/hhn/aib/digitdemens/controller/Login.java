@@ -4,17 +4,17 @@ import java.io.File;
 import javax.crypto.BadPaddingException;
 
 import de.hhn.aib.digitdemens.utility.Utility;
+import de.hhn.aib.digitdemens.utility.Variables;
 
 public class Login {
 	//TODO
-	public static String workingDir = "C:\\Users\\Marek Parucha\\DigitalDemens\\";
 	private static boolean loggedIn = false;
 	
 	public static boolean login(String username, char[] password) throws Exception
 	{
-		File systemPath = new File(workingDir);
+		File systemPath = new File(Variables.systemDir);
 		File userPath = checkSystemLog(username);
-		String fullName = userPath.getAbsolutePath().substring(workingDir.length());
+		String fullName = userPath.getAbsolutePath().substring(Variables.workingDir.length());
 		System.out.println(userPath.getAbsolutePath());
 		if(userPath.equals(systemPath)) return loggedIn;
 		if(!checkLoginData(username, password, userPath, fullName)) return loggedIn;
@@ -27,13 +27,20 @@ public class Login {
 	{
 		return true;
 	}
-	//TODO
+	
 	public static File checkSystemLog(String username) throws Exception
 	{
-		File systemPath = new File(workingDir+"systemFile.dd");
-		String systemDataDecrypted=  Utility.decryptFile(systemPath, String.valueOf(workingDir));
-		System.out.println(systemDataDecrypted);
-		return new File(workingDir+findUserpath(username,systemDataDecrypted));
+		File systemPath = new File(Variables.systemDir+"\\systemFile.dd");
+		String systemDataDecrypted;
+		try {
+			systemDataDecrypted = Utility.decryptFile(systemPath, String.valueOf(Variables.systemDir));
+			System.out.println(systemDataDecrypted);
+			return new File(Variables.workingDir+findUserpath(username,systemDataDecrypted));
+		} catch (Exception e) {
+			System.out.println("Please register first.");
+			throw new Exception();
+		}
+		
 	}
 	//TODO if user does not exist failure
 	public static String findUserpath(String username, String text)

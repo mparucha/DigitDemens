@@ -35,7 +35,7 @@ public class DigitDemensView extends JFrame{
 	public DigitDemensView() {
 		super("DigitDemens - Main");
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		this.setSize(1200,800);
+		//this.setSize(1200,800);
 		initView();
 	}
 	

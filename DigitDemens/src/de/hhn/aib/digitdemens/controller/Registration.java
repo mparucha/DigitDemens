@@ -5,11 +5,9 @@ import java.io.IOException;
 
 import de.hhn.aib.digitdemens.utility.FileOutput;
 import de.hhn.aib.digitdemens.utility.Utility;
+import de.hhn.aib.digitdemens.utility.Variables;
 
 public class Registration {
-	
-	//TODO
-	public static String workingDir = "C:\\Users\\Marek Parucha\\DigitalDemens\\";
 	
 	
 	public static boolean register(String username, String fullName, char[] password, String[] info)
@@ -17,7 +15,7 @@ public class Registration {
 		if (!checkInput(username, fullName, password)) return false;
 		try
 		{
-			File userPath = new File(workingDir+fullName);
+			File userPath = new File(Variables.workingDir+fullName);
 			System.out.println(userPath.getAbsolutePath());
 			
 			if(userPath.exists())
@@ -63,20 +61,20 @@ public class Registration {
 	
 	public static boolean writeSystemFile(String username, String fullName) throws IOException, Exception
 	{
-		File systemPath = new File(workingDir + "systemFile.dd");
+		File systemPath = new File(Variables.systemDir + "systemFile.dd");
 		FileOutput fo = new FileOutput(fullName, username);
 		if(!systemPath.exists())
 		{
-			if(fo.writeSystemFile(fo.makeEncryptedSystemFile(workingDir)))
+			if(fo.writeSystemFile(fo.makeEncryptedSystemFile(Variables.systemDir)))
 			{
 				return true;
 			}	
 		}
 		else
 		{
-			String text =  Utility.decryptFile(systemPath, workingDir);
+			String text =  Utility.decryptFile(systemPath, Variables.systemDir);
 			systemPath.delete();
-			if(fo.writeSystemFile(fo.editEncryptedSystemFile(workingDir, text)))
+			if(fo.writeSystemFile(fo.editEncryptedSystemFile(Variables.systemDir, text)))
 			{
 				return true;
 			}	

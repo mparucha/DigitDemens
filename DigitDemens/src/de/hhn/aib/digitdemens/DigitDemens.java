@@ -1,15 +1,20 @@
 package de.hhn.aib.digitdemens;
 
 
+import de.hhn.aib.digitdemens.utility.Setup;
+import de.hhn.aib.digitdemens.utility.Variables;
 import de.hhn.aib.digitdemens.view.DigitDemensView;
 
 public class DigitDemens {
 
 	private static DigitDemensView dDView;
-	
+
+
 	public static void main(String[] args) {
-		
+		Setup.setProperties();
+		System.out.println(Variables.systemDir);
 		dDView = new DigitDemensView();
+		dDView.setSize(Variables.windowWidth, Variables.windowHeight);
 		dDView.setVisible(true);
 		dDView.setLocationRelativeTo(null);
 

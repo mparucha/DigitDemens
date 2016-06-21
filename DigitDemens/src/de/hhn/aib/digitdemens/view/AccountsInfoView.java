@@ -68,7 +68,6 @@ public class AccountsInfoView extends JPanel{
 		init();
 		setAccount();
 		initListener();
-		System.out.println(password.getEchoChar());
 	}
 	
 	public void init()
