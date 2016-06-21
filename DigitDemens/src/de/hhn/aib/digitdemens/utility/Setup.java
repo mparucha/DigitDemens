@@ -11,11 +11,11 @@ public class Setup {
 	{
 		Properties props = new Properties();
 		try {
-			FileReader fi = new FileReader(Variables.systemDir+"\\config.properties");
+			FileReader fi = new FileReader(Variables.getSystemDir()+"\\config.properties");
 			props.load(fi);
 			Variables.setWindowHeight(Integer.parseInt(props.getProperty("WindowHeight","800")));
 			Variables.setWindowWidth(Integer.parseInt(props.getProperty("WindowWidth","1200")));
-			Variables.setWorkingDir(props.getProperty("UserDirectory",Variables.workingDir));
+			Variables.setWorkingDir(props.getProperty("UserDirectory",Variables.getWorkingDir()));
 		} catch (IOException e) {
 			try {
 				setText(props);
@@ -28,9 +28,9 @@ public class Setup {
 	
 	private static void setText(Properties props) throws IOException
 	{
-		props.setProperty("UserDirectory",Variables.workingDir);
+		props.setProperty("UserDirectory",Variables.getWorkingDir());
 		props.setProperty("WindowWidth","1200");
 		props.setProperty("WindowHeight","800");
-		props.store(new FileWriter(Variables.systemDir+"\\config.properties"),"#Please Configure the Variables like you want.");
+		props.store(new FileWriter(Variables.getSystemDir()+"\\config.properties"),"#Please Configure the Variables like you want.");
 	}
 }

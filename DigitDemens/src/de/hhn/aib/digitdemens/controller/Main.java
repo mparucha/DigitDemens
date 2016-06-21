@@ -30,7 +30,7 @@ public class Main {
 	//List <Groups>
 	public static Groups[] getGroups() throws Exception
 	{
-		File logPath = new File(Variables.workingDir+fullName+"\\logFile.dd");
+		File logPath = new File(Variables.getWorkingDir()+fullName+"\\logFile.dd");
 		FileInput fi = new FileInput(logPath);
 		String decryptedLog = "";
 		String[] groupsStrings;
@@ -44,7 +44,7 @@ public class Main {
 		groupsList = new Groups[groupsStrings.length];
 		try
 		{
-			for(int i = 0; i < groupsStrings.length; i++) groupsPath[i] = new File(Variables.workingDir + fullName +"\\"+groupsStrings[i]+".ser");
+			for(int i = 0; i < groupsStrings.length; i++) groupsPath[i] = new File(Variables.getWorkingDir() + fullName +"\\"+groupsStrings[i]+".ser");
 			for(int i = 0; i < groupsPath.length; i++)
 			{
 				fi.setPath(groupsPath[i]);
@@ -118,11 +118,11 @@ public class Main {
 	public static void editGroup(Groups group, String name, String description) throws Exception
 	{
 		deleteGroup(group);
-		String[] data = addGroupsString(name, Utility.decryptFile(new File(Variables.workingDir+fullName+"\\logFile.dd"), String.valueOf(password)));
+		String[] data = addGroupsString(name, Utility.decryptFile(new File(Variables.getWorkingDir()+fullName+"\\logFile.dd"), String.valueOf(password)));
 		FileOutput fo = new FileOutput(fullName, username, String.valueOf(password));
 		group.setName(name);
 		group.setDescription(description);
-		group.setPath(new File(Variables.workingDir+fullName+"\\"+name+".ser"));
+		group.setPath(new File(Variables.getWorkingDir()+fullName+"\\"+name+".ser"));
 		fo.writeGroupToDir(group);
 		fo.writeLogFile(fo.makeEncryptedLogFile(data));
 	
@@ -130,9 +130,9 @@ public class Main {
 	
 	public static void addGroup(String name, String description) throws Exception
 	{
-		String[] data = addGroupsString(name, Utility.decryptFile(new File(Variables.workingDir+fullName+"\\logFile.dd"), String.valueOf(password)));
+		String[] data = addGroupsString(name, Utility.decryptFile(new File(Variables.getWorkingDir()+fullName+"\\logFile.dd"), String.valueOf(password)));
 		FileOutput fo = new FileOutput(fullName, username, String.valueOf(password));
-		fo.writeGroupToDir(new Groups(name, new File(Variables.workingDir+fullName+"\\"+name+".ser"), username, fullName, description));
+		fo.writeGroupToDir(new Groups(name, new File(Variables.getWorkingDir()+fullName+"\\"+name+".ser"), username, fullName, description));
 		fo.writeLogFile(fo.makeEncryptedLogFile(data));
 		
 		
@@ -140,7 +140,7 @@ public class Main {
 	
 	public static void deleteGroup(Groups group) throws Exception
 	{
-		String[] data = deleteGroupsString(group.getName(), Utility.decryptFile(new File(Variables.workingDir+fullName+"\\logFile.dd"), String.valueOf(password)));
+		String[] data = deleteGroupsString(group.getName(), Utility.decryptFile(new File(Variables.getWorkingDir()+fullName+"\\logFile.dd"), String.valueOf(password)));
 		File groupFile = group.getPath();
 		FileOutput fo = new FileOutput(fullName, username, String.valueOf(password));
 		fo.writeLogFile(fo.makeEncryptedLogFile(data));

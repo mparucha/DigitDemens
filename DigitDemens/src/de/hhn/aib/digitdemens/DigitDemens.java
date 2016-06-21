@@ -12,9 +12,9 @@ public class DigitDemens {
 
 	public static void main(String[] args) {
 		Setup.setProperties();
-		System.out.println(Variables.systemDir);
+		System.out.println(Variables.getSystemDir());
 		dDView = new DigitDemensView();
-		dDView.setSize(Variables.windowWidth, Variables.windowHeight);
+		dDView.setSize(Variables.getWindowWidth(), Variables.getWindowHeight());
 		dDView.setVisible(true);
 		dDView.setLocationRelativeTo(null);
 

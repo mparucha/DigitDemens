@@ -12,9 +12,9 @@ public class Login {
 	
 	public static boolean login(String username, char[] password) throws Exception
 	{
-		File systemPath = new File(Variables.systemDir);
+		File systemPath = new File(Variables.getSystemDir());
 		File userPath = checkSystemLog(username);
-		String fullName = userPath.getAbsolutePath().substring(Variables.workingDir.length());
+		String fullName = userPath.getAbsolutePath().substring(Variables.getWorkingDir().length());
 		System.out.println(userPath.getAbsolutePath());
 		if(userPath.equals(systemPath)) return loggedIn;
 		if(!checkLoginData(username, password, userPath, fullName)) return loggedIn;
@@ -30,12 +30,12 @@ public class Login {
 	
 	public static File checkSystemLog(String username) throws Exception
 	{
-		File systemPath = new File(Variables.systemDir+"\\systemFile.dd");
+		File systemPath = new File(Variables.getSystemDir()+"\\systemFile.dd");
 		String systemDataDecrypted;
 		try {
-			systemDataDecrypted = Utility.decryptFile(systemPath, String.valueOf(Variables.systemDir));
+			systemDataDecrypted = Utility.decryptFile(systemPath, String.valueOf(Variables.getUserName()));
 			System.out.println(systemDataDecrypted);
-			return new File(Variables.workingDir+findUserpath(username,systemDataDecrypted));
+			return new File(Variables.getWorkingDir()+findUserpath(username,systemDataDecrypted));
 		} catch (Exception e) {
 			System.out.println("Please register first.");
 			throw new Exception();

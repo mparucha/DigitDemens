@@ -38,7 +38,7 @@ public class FileOutput {
 	
 	public boolean writeLogFileFromString(String data) throws IOException
 	{
-		File logFile = new File(Variables.workingDir+fullName+"\\logFile.dd");
+		File logFile = new File(Variables.getWorkingDir()+fullName+"\\logFile.dd");
 		System.out.println(logFile.getAbsolutePath());
 		FileOutputStream fos = new FileOutputStream(logFile);
 		
@@ -62,7 +62,7 @@ public class FileOutput {
 	
 	public boolean writeLogFile(byte[] dataByte) throws IOException
 	{
-		File logFile = new File(Variables.workingDir+fullName+"\\logFile.dd");
+		File logFile = new File(Variables.getWorkingDir()+fullName+"\\logFile.dd");
 		FileOutputStream fos = new FileOutputStream(logFile);
 		
 		logFile.createNewFile();
@@ -83,7 +83,7 @@ public class FileOutput {
 	//TODO
 	public boolean writeSystemFile(byte[] dataByte) throws IOException
 	{
-		File systemFile = new File(Variables.systemDir+"\\systemFile.dd");
+		File systemFile = new File(Variables.getSystemDir()+"\\systemFile.dd");
 		FileOutputStream fos = new FileOutputStream(systemFile, true);
 		
 		systemFile.createNewFile();

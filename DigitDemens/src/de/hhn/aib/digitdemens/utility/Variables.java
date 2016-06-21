@@ -2,10 +2,20 @@ package de.hhn.aib.digitdemens.utility;
 
 public class Variables {
 	
-public static String workingDir = System.getProperty("user.home")+"\\DigitalDemens\\";
-public static final String systemDir = System.getProperty("user.dir");
-public static int windowHeight = 800;
-public static int windowWidth = 1200;
+private static String workingDir = System.getProperty("user.home")+"\\DigitalDemens\\";
+private static final String systemDir = System.getProperty("user.dir");
+private static int windowHeight = 800;
+private static int windowWidth = 1200;
+private static String userHome = System.getProperty("user.name");
+
+
+public static String getUserName() {
+	return userHome;
+}
+
+public static String getSystemDir() {
+	return systemDir;
+}
 public static String getWorkingDir() {
 	return workingDir;
 }
