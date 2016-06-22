@@ -30,7 +30,7 @@ public class Login {
 	
 	public static File checkSystemLog(String username) throws Exception
 	{
-		File systemPath = new File(Variables.getSystemDir()+"\\systemFile.dd");
+		File systemPath = new File(Variables.getSystemDir()+"systemFile.dd");
 		String systemDataDecrypted;
 		try {
 			systemDataDecrypted = Utility.decryptFile(systemPath, String.valueOf(Variables.getUserName()));

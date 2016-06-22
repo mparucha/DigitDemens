@@ -12,7 +12,6 @@ public class DigitDemens {
 
 	public static void main(String[] args) {
 		Setup.setProperties();
-		System.out.println(Variables.getSystemDir());
 		dDView = new DigitDemensView();
 		dDView.setSize(Variables.getWindowWidth(), Variables.getWindowHeight());
 		dDView.setVisible(true);

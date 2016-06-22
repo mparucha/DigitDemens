@@ -3,7 +3,7 @@ package de.hhn.aib.digitdemens.utility;
 public class Variables {
 	
 private static String workingDir = System.getProperty("user.home")+"\\DigitalDemens\\";
-private static final String systemDir = System.getProperty("user.dir");
+private static final String systemDir = System.getProperty("user.dir")+"\\";
 private static int windowHeight = 800;
 private static int windowWidth = 1200;
 private static String userHome = System.getProperty("user.name");
