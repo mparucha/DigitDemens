@@ -134,6 +134,18 @@ public class AccountsView extends JPanel{
 		this.group = group;
 	}
 	
+	public void refresh()
+	{
+		name.setText("");
+		description.setText("");
+		username.setText("");
+		email.setText("");
+		password.setText("");
+		url.setText("");
+		passwordHint.setText("");
+		info.setText("");
+	}
+	
 	public void initListener()
 	{
 		okButton.addActionListener(new ActionListener() {
@@ -141,6 +153,7 @@ public class AccountsView extends JPanel{
             public void actionPerformed(ActionEvent e) {
             	try {
 					Main.addAccount(name.getText(), description.getText(), username.getText(), email.getText(), password.getPassword(), url.getText(), passwordHint.getText(), LocalDateTime.now(), info.getText(), group);
+					refresh();
 					mainView.setView("InfoView");
 					mainView.setAccounts();
 				} catch (NullPointerException e1) {
@@ -156,6 +169,7 @@ public class AccountsView extends JPanel{
             // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
             public void actionPerformed(ActionEvent e) {
             	try {
+            		refresh();
 					mainView.setView("InfoView");
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block

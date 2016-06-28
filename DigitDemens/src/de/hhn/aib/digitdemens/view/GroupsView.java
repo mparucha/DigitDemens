@@ -73,6 +73,12 @@ public class GroupsView extends JPanel{
 		
 	}
 	
+	public void refresh()
+	{
+		name.setText("");
+		description.setText("");
+	}
+	
 	public void initListener()
 	{
 		okButton.addActionListener(new ActionListener() {
@@ -80,6 +86,7 @@ public class GroupsView extends JPanel{
             public void actionPerformed(ActionEvent e) {
             	try {
 					Main.addGroup(name.getText(), description.getText());
+					refresh();
 					mainView.setView("InfoView");
 					mainView.setGroups();
 				} catch (Exception e1) {
@@ -93,6 +100,7 @@ public class GroupsView extends JPanel{
             // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
             public void actionPerformed(ActionEvent e) {
             	try {
+            		refresh();
 					mainView.setView("InfoView");
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
